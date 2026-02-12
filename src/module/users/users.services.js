@@ -1,10 +1,9 @@
 import * as DB from "../../DB/DB.services.js";
-import { checkEmail } from "../../common/utils/checkEmail.js";
 import { encrypt } from "../../common/utils/securety/crypto.securety.js";
 import { hash, compare } from "../../common/utils/securety/hash.securety.js";
 import userModel from "../../DB/models/user.js";
 import { create } from "../../DB/DB.services.js";
-import responce from "../../common/utils/response.js";
+import response from "../../common/utils/response.js";
 
 // sign up -->
 // 1- get the information { name (required), email (required), age (required), gender (optional) , phone (required), pass (required), cpass (required), provider (optional)} from body
@@ -29,13 +28,7 @@ export const signUp = async (req, res, next) => {
       cause: 401,
     });
 
-
-    let emailExsits = checkEmail(email);
-    
-  if (emailExsits)
-    throw new Error("the used email is not unique", {
-      cause: 401,
-    });
+  // let emailExsits = DB.find(userModel,{email});
 
   let user = create(
     userModel,
@@ -54,13 +47,40 @@ export const signUp = async (req, res, next) => {
   );
 
   user
-    .then((v) => {
-      responce(res, 201, v._doc);
+    .then((data) => {
+      response(res, 201, data._doc);
     })
     .catch((err) => {
       throw new Error("there is a problem with the server", { cause: 403 });
     });
 };
 
-export const logIn = async (req, res, next) => {};
-export const getProfile = async (req, res, next) => {};
+export const logIn = async (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password)
+    throw new Error("please make sure you filled the required fields");
+
+  // let user = DB.find(userModel, { email });
+
+  if (!user) throw new Error("cannot find the user");
+
+  if (!compare(password, user.password))
+    throw new Error("please insert the correct passwords");
+
+  user.then((data)=>{
+    response(res,201,data._doc)
+  })
+};
+
+export const getProfile = async (req, res, next) => {
+  let { id } = req.params;
+  if (!id) throw new Error("please insert the user id", { cause: 301 });
+
+  // let user = DB.findUserById(id);
+
+  if (!user) throw new Error("cannot find the user", { cause: 403 });
+
+  user.then((data) => {
+    response(res, 201, data._doc);
+  });
+};
