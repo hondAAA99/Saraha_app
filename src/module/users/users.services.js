@@ -6,7 +6,6 @@ import { create } from "../../DB/DB.services.js";
 import response from "../../common/utils/response.js";
 import {
   signToken,
-  decodeToken,
 } from "../../common/utils/securety/jwt.sevices.js";
 
 // sign up -->
