@@ -38,10 +38,12 @@ const userSchema = Schema(
 userSchema
   .virtual("userName")
   .get(function (){
-    return new String().concat(this.firstName, this.lastName);
+    return this.fistName + ' ' + this.lastName ;
   })
   .set(function (v){
+    
     let [fName, lName] = v.split(" ");
+    console.log(fName, lName);
     this.fistName = fName;
     this.lastName = lName;
   });

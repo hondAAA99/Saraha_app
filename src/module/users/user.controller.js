@@ -6,7 +6,7 @@ const userRouter = Router();
 
 userRouter.post("/signup", user.signUp);
 userRouter.get("/login", user.logIn);
-userRouter.get("/getProfile/:id", authenticate, user.getProfile);
+userRouter.get("/getProfile", authenticate, user.getProfile);
 userRouter.get("/{*demo}", (req, res, next) => {
   res.status(200).send("hello my user");
 });
