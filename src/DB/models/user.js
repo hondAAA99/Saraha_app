@@ -1,6 +1,6 @@
 import mongoose, { Schema, model, mongo } from "mongoose";
-import { gender } from "../../common/enum";
-import { provider } from "../../common/enum";
+import { gender } from "../../common/enum/enum";
+import { provider } from "../../common/enum/enum";
 
 const userSchema = Schema(
   {

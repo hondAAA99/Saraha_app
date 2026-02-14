@@ -3,7 +3,7 @@ import { encrypt } from "../../common/utils/securety/crypto.securety.js";
 import { hash, compare } from "../../common/utils/securety/hash.securety.js";
 import userModel from "../../DB/models/user.js";
 import { create } from "../../DB/DB.services.js";
-import response from "../../common/utils/response.js";
+import response from "../../common/utils/response/response.js";
 import { signToken } from "../../common/utils/securety/jwt.sevices.js";
 import { decrypt } from "../../common/utils/securety/crypto.securety.js";
 
@@ -85,7 +85,7 @@ export const logIn = async (req, res, next) => {
 // 2- retrieve the account data and show it off
 
 export const getProfile = async (req, res, next) => {
-  const { fistName, lastName, email, phone, gender } = req.user;
+  const { fistName, lastName, email, gender } = req.user;
   response(res, 201, {
     fistName,
     lastName,
