@@ -7,8 +7,9 @@ const userRouter = Router();
 
 userRouter.post("/signup", user.signUp);
 userRouter.get("/login", user.logIn);
-userRouter.post("/signup/gmail", user.logIn);
-userRouter.get("/getProfile", authenticate,authorization(['admin']) , authorization(req.body.role), user.getProfile);
+userRouter.post("/signup/gmail", user.signUpWithGoogle);
+userRouter.get("/getProfile", authenticate , authorization(['user']) , user.getProfile);
+
 userRouter.get("/{*demo}", (req, res, next) => {
   res.status(200).send("hello my user");
 });

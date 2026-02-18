@@ -1,11 +1,11 @@
 import express from "express";
 import { main } from "./DB/connection.js";
 import userRouter from "./module/users/user.controller.js";
-import dotenv from "dotenv";
 import cors from 'cors'
-dotenv.config();
+import { PORT } from "../config/env.services.js";
+
 const app = express();
-const port = 3000;
+const port = PORT ;
 const host = "192.168.1.5";
 const bootstrap = () => {
   main(); // DB conection

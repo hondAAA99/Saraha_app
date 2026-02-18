@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index"
+    "start": "cross-env NODE_ENV=production node src/index",
+    "dev": "cross-env NODE_ENV=devolopment nodemon src/index"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
+    "cross-env": "^10.1.0",
+    "crossenv": "^0.0.2-security",
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
     "google-auth-library": "^10.5.0",

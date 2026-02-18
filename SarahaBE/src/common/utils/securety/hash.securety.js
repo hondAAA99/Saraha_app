@@ -1,7 +1,8 @@
 import { hashSync ,compareSync} from "bcrypt";
+import {SALT} from '../../../../config/env.services.js'
 
-export function hash(data,salt=12){
-    return hashSync(data,salt)
+export function hash(data){
+    return hashSync(data,SALT)
 }
 
 export function compare(plainText, hashedText) {  

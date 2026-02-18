@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
+import { SECRET_ACCESS_TOKEN } from "../../../../config/env.services.js";
 
 export const signToken = (id) => {
   const token = jwt.sign(
     {
       userId: id,
     },
-    process.env.SECRET_ACCESS_TOKEN,
+    SECRET_ACCESS_TOKEN,
     {
       expiresIn: "1h",
     },
@@ -15,6 +16,6 @@ export const signToken = (id) => {
 };
 
 export const decodeToken = (token) => {
-  const verify = jwt.verify(token, process.env.SECRET_ACCESS_TOKEN);
+  const verify = jwt.verify(token, SECRET_ACCESS_TOKEN);
   return verify;
 };

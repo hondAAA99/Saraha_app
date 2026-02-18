@@ -1,10 +1,9 @@
-
-
-const authorized = async (req,res,next)=>{
-    return (role = [])=>{
-        if ( !req.user.role.includes(role) ){
-            throw new Error("you are not authorized",{caused : 403});
-        }
-        next();
+export const authorization =  (role = []) => {
+  return function (req,res,next){
+    if (!role.includes(req.user.role)) {
+      throw new Error("you are not authorized", { caused: 403 });
     }
-}
+    next();
+  };
+  
+};

@@ -18,13 +18,13 @@ const userSchema = Schema(
     },
     phone: {
       type: String,
-      require: function () {
+      require: function (){
         return provider.google ? false : true;
       },
     },
     password: {
       type: String,
-      require: function () {
+      require: function (){
         return provider.google ? false : true;
       },
     },
