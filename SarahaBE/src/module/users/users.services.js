@@ -7,6 +7,7 @@ import response from "../../common/utils/response/response.js";
 import { signToken } from "../../common/utils/securety/jwt.sevices.js";
 import { OAuth2Client } from "google-auth-library";
 import { provider } from "../../common/enum/enum.js";
+import { sentOIP } from "../../common/utils/email/email.services.js";
 
 // sign up -->
 // 1- get the information { name (required), email (required), age (required), gender (optional) , phone (required), pass (required), cpass (required), provider (optional)} from body
@@ -47,6 +48,12 @@ export const signUp = async (req, res, next) => {
     password: hash(password),
   });
 
+  let emailOtp = sentOIP({ email });
+
+  let {otp} = req.body ;
+
+  if ( otp != emailOtp ) throw new Error("verfiction error");
+  
   response(res, 201, {
     name: user.userName,
     email: user.email,
@@ -76,11 +83,11 @@ export const logIn = async (req, res, next) => {
 
   let accessToken = signToken(user.id);
 
+
   response(res, 201, { token: accessToken });
 };
 
 export const signUpWithGoogle = async (req, res, next) => {
-  
   const { idToken } = req.body;
 
   const client = new OAuth2Client();
@@ -93,29 +100,25 @@ export const signUpWithGoogle = async (req, res, next) => {
 
   const payload = verify.getPayload();
 
-  
-
   const { name, email, email_verfied, picture } = payload;
 
-  let [user] = await DB.find(userModel,{ email });
+  let [user] = await DB.find(userModel, { email });
 
-  
   if (!user) {
     user = await DB.create(userModel, {
       name,
       email,
       picture,
       confirmed: email_verfied,
-      provider : provider.google
+      provider: provider.google,
     });
   }
 
-  if ( user.provider == provider.system )
+  if (user.provider == provider.system)
     throw new Error("please sign up by the system");
 
   const token = signToken(user.id);
-  response(res,201,{token});
-
+  response(res, 201, { token });
 };
 
 // getProfile -->

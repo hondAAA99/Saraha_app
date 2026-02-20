@@ -11,7 +11,7 @@ userRouter.post("/signup/gmail", user.signUpWithGoogle);
 userRouter.get("/getProfile", authenticate , authorization(['user']) , user.getProfile);
 
 userRouter.get("/{*demo}", (req, res, next) => {
-  res.status(200).send("hello my user");
+  res.status(200).send("hello my user"); 
 });
 
 export default userRouter;

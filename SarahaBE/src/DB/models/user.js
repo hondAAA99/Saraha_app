@@ -59,7 +59,6 @@ userSchema
   })
   .set(function (v) {
     let [fName, lName] = v.split(" ");
-    console.log(fName, lName);
     this.fistName = fName;
     this.lastName = lName;
   });
